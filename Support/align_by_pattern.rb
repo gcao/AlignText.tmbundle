@@ -29,8 +29,14 @@ module AlignByPattern
     best_column = 0
     for line in lines
       if line =~ pattern then
-        m           = pattern.match(line)
-        best_column = m.begin(0) if m.begin(0) > best_column
+        m               = pattern.match(line)
+        
+        # Remove extra trailing spaces when computing best column
+        right_margin    = m.begin(0)
+        adjusted_margin = line[0..right_margin - 1].rstrip.size + 1
+        right_margin    = adjusted_margin if adjusted_margin < right_margin
+
+        best_column     = right_margin if right_margin > best_column
       end
     end
     
@@ -38,6 +44,7 @@ module AlignByPattern
       if line =~ pattern then
         before = $PREMATCH
         after  = line[before.length..-1]
+        before.rstrip! # remove trailing spaces
         [before.ljust(best_column), after].join
       else
         line
@@ -51,8 +58,14 @@ module AlignByPattern
     best_column = 0
     for line in lines
       if line =~ pattern then
-        m           = pattern.match(line)
-        best_column = m.begin(1) if m.begin(1) > best_column
+        m               = pattern.match(line)
+        
+        # Remove extra trailing spaces when computing best column
+        right_margin    = m.begin(1)
+        adjusted_margin = line[0..right_margin - 1].rstrip.size + 1
+        right_margin    = adjusted_margin if adjusted_margin < right_margin
+        
+        best_column     = right_margin if right_margin > best_column
       end
     end
     
@@ -60,6 +73,7 @@ module AlignByPattern
       if line =~ pattern then
         before = line[0..$LAST_MATCH_INFO.begin(1) - 1]
         after  = line[before.length..-1]
+        before.rstrip! # remove trailing spaces
         [before.ljust(best_column), after].join
       else
         line

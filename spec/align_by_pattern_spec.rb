@@ -23,6 +23,17 @@ describe AlignByPattern do
     TEXT
   end
   
+  it "should strip spaces before matched pattern and align" do
+    input = <<-TEXT.lines
+      a   = 1
+      bc   = 2
+    TEXT
+    align_by_pattern(input, '=').should == <<-TEXT.lines.to_a
+      a  = 1
+      bc = 2
+    TEXT
+  end
+  
   it "should align text by multiple patterns" do
     input = <<-TEXT.lines
       validates_presence_of :first_name, :message => error_message(:validates_presence_of_first_name)
