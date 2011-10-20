@@ -28,7 +28,7 @@ module AlignByPattern
     
     best_column = 0
     for line in lines
-      if line =~ pattern then
+      if line =~ pattern
         m               = pattern.match(line)
         
         # Remove extra trailing spaces when computing best column
@@ -41,7 +41,7 @@ module AlignByPattern
     end
     
     lines.map do |line|
-      if line =~ pattern then
+      if line =~ pattern
         before = $PREMATCH
         after  = line[before.length..-1]
         before.rstrip! # remove trailing spaces
@@ -57,7 +57,7 @@ module AlignByPattern
     
     best_column = 0
     for line in lines
-      if line =~ pattern then
+      if line =~ pattern
         m               = pattern.match(line)
         
         # Remove extra trailing spaces when computing best column
@@ -70,7 +70,7 @@ module AlignByPattern
     end
     
     lines.map do |line|
-      if line =~ pattern then
+      if line =~ pattern
         before = line[0..$LAST_MATCH_INFO.begin(1) - 1]
         after  = line[before.length..-1]
         before.rstrip! # remove trailing spaces
